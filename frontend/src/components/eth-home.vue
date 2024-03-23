@@ -1,21 +1,56 @@
 <template>
-  <div>
-    <el-card style="max-width: 480px">
-      <template #header>
-        <div class="card-header">
-          <span>item name</span>
-        </div>
-      </template>
-      <p v-for="o in 4" :key="o" class="text item">{{ 'List item ' + o }}</p>
-      <template #footer>
-        <el-button plain>Plain</el-button>
-      </template>
-    </el-card>
-  </div>
+  <el-row :gutter="300">
+    <el-col v-for="item in items" :key="item.id" :span="4">
+      <el-card style="width: 300px">
+        <template #header>
+          <div class="card-header">
+            <span>{{ item.name }}</span>
+          </div>
+        </template>
+        <img :src="item.image" alt="Image Description" style="width: 280px; height: 280px" />
+        <template #footer>
+          <div class="card-footer">
+            <el-button plain @click="dialogFormVisible = true">Buy It</el-button>
+          </div>
+        </template>
+      </el-card>
+    </el-col>
+  </el-row>
+  <el-dialog v-model="dialogFormVisible" title="Warning" width="500">
+    <div>
+      <p>Are you sure you want to buy this toy?</p>
+    </div>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false"> Confirm </el-button>
+      </div>
+    </template>
+  </el-dialog>
 </template>
 
 <script lang="ts" setup>
-// import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
+import { Warning } from '@element-plus/icons'
+import toy1 from '@/assets/image/toy1.jpg'
+import toy2 from '@/assets/image/toy2.jpg'
+import toy3 from '@/assets/image/toy3.jpg'
+import toy4 from '@/assets/image/toy4.jpg'
+import toy5 from '@/assets/image/toy5.jpg'
+
+const dialogFormVisible = ref(false)
+const formLabelWidth = '140px'
+
+const form = reactive({
+  name: '',
+  region: '',
+  date1: '',
+  date2: '',
+  delivery: false,
+  type: [],
+  resource: '',
+  desc: ''
+})
 
 // const form = reactive({
 //   name: '',
@@ -32,4 +67,33 @@
 // const onSubmit = () => {
 //   console.log('submit!')
 // }
+
+const items = [
+  {
+    id: 1,
+    name: 'Item 1',
+    image: toy1
+  },
+  {
+    id: 2,
+    name: 'Item 2',
+    image: toy2
+  },
+  {
+    id: 3,
+    name: 'Item 3',
+    image: toy3
+  },
+  {
+    id: 4,
+    name: 'Item 4',
+    image: toy4
+  },
+  {
+    id: 5,
+    name: 'Item 5',
+    image: toy5
+  }
+  // Add more items as needed
+]
 </script>

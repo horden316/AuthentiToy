@@ -3,8 +3,8 @@ const fs = require("fs");
 const { ETH_DATA_FORMAT, DEFAULT_RETURN_FORMAT } = require("web3");
 let account, contract, contractAddress;
 
-const web3 = new Web3("https://optimism-sepolia.infura.io/v3/aea79c382e204cf487e173b3df285ccc");
-// const web3 = new Web3("HTTP://127.0.0.1:7545");
+// const web3 = new Web3("https://optimism-sepolia.infura.io/v3/aea79c382e204cf487e173b3df285ccc");
+const web3 = new Web3("HTTP://127.0.0.1:7545");
 
 function initContract() {
   // smartcontract interact
@@ -19,45 +19,8 @@ function initContract() {
   contract = new web3.eth.Contract(abi, contractAddress);
   contract.handleRevert = true;
 }
-// console.log(account.address);
-// contract methods
-// async function contractMethod(_type, _to, _toyName) {
-//   contract.methods
-//     .mint(_type, _to, _toyName)
-//     .send({
-//       from: account.address,
-//       gas: 1000000,
-//       gasPrice: "20 gwei",
-//     })
-//     .then((result) => {
-//       console.log(result);
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//     });
-// }
-
 
 async function contractMethod(_type, _toAddr, _toyName) {
-  // get gas limit
-  // await web3.eth
-  //   .estimateGas(
-  //     {
-  //       from: account.address,
-  //       to: _toAddr,
-        
-  //     },
-  //     "latest",
-  //     ETH_DATA_FORMAT
-  //   )
-  //   .then((value) => {
-  //     limit = value;
-  //   });
-  // limit = await contract.methods
-  //   .mint(_type, _toAddr, _toyName)
-  //   .estimateGas();
-  
-
   // tx
   const tx = {
     from: account.address,
@@ -77,12 +40,10 @@ async function contractMethod(_type, _toAddr, _toyName) {
     .sendSignedTransaction(signedTx.rawTransaction)
     .once("transactionHash", (txhash) => {
       console.log(`Mining transaction ...`);
-      // console.log(`https://${network}.etherscan.io/tx/${txhash}`);
     });
   // The transaction is now on chain!
   console.log(`Mined in block ${receipt.blockNumber}`);
 }
 
-// initContract();
-// contractMethod(_type, _to, _toyName);
+
 module.exports = { initContract, contractMethod };

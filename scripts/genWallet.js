@@ -13,13 +13,13 @@ const _toyName = 'test';
 // generate wallet
 function generateWallet() {
   const account = web3.eth.accounts.create();
-  return account
+  fs.writeFileSync("acc.txt", JSON.stringify(account));
+  const _toAddr = account.address; 
+  const pubKey = web3.eth.accounts.privateKeyToPublicKey(account.privateKey);
+
+  interact.initContract();
+  interact.contractMethod(_type, _toAddr, _toyName);
+  return pubKey;
 }
-const output = generateWallet();
-fs.writeFileSync("acc.txt", JSON.stringify(output));
 
-const _toAddr = output.address; 
-
-interact.initContract();
-interact.contractMethod(_type, _toAddr, _toyName);
-
+module.exports = { generateWallet };

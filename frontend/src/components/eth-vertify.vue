@@ -18,6 +18,7 @@
     </el-dialog>
     <el-dialog v-model="dialogCorrectVisible" title="Toy Name" width="500">
     <div>
+      <label for="inputName" >Your toy Name:</label>
       <input type="text" id="inputName" v-model="inputName" class="input-field">
     </div>
     <template #footer>

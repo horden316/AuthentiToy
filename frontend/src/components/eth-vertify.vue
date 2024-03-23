@@ -2,31 +2,18 @@
   <div class="container">
     <el-card style="max-width: 480px">
       <template #header>
-        <h2 class="header-title">Verify our Toy</h2>
+        <h2 class="header-title ">Verify our Toy</h2>
       </template>
       <div class="input-container">
-        <label for="idNumber">Your toy key:</label>
+        <label for="idNumber" >Your toy key:</label>
         <input type="text" id="idNumber" v-model="idNumber" class="input-field">
-        <el-button color="#7D7DFF" :dark="isDark" @click="verify" class="verify-button">Verify</el-button>
+        <el-button color="#7D7DFF"  @click="verify" class="verify-button  ">Verify</el-button>
       </div>
     </el-card>
   </div>
 </template>
 
 <style>
-@font-face {
-  font-family: 'cjkFonts';
-  src: url('/fonts/cjkFonts_allseto_v1.woff2') format('woff2');
-  /* 如果您有其他字体格式，请添加相应的引用 */
-  font-weight: normal;
-  font-style: normal;
-}
-
-/* 应用字体到所有元素 */
-* {
-  font-family: 'cjkFonts', sans-serif;
-}
-
 .container {
   display: flex;
   justify-content: center;
@@ -76,7 +63,7 @@ export default {
     verify() {
       // 在这里添加验证逻辑，可以根据需求进行更改
       // 例如：验证身份证号码格式等
-      console.log('进行验证:', this.idNumber);
+      console.log('Verifying:', this.idNumber);
     }
   }
 };

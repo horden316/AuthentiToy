@@ -54,7 +54,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-
+import { ElLoading } from 'element-plus'
 const dialogFormVisible = ref(false)
 const showToyInfo = ref(false)
 
@@ -75,13 +75,13 @@ const showToyInfo = ref(false)
 // }
 
 import Web3 from 'web3'
-
 onMounted(async () => {
   const web3 = new Web3('https://eth.llamarpc.com')
 })
 
+// Passing in the eth or web3 package is necessary to allow retrieving chainId, gasPrice and nonce automatically
+// for accounts.signTransaction().
 let serialPort
-
 async function verify() {
   if (navigator.serial) {
     console.log('Web Serial API supported')
@@ -127,8 +127,9 @@ async function startReceivingMessages(serialPort) {
         const blocks = fullText.match(/block\d+:[^\s]+/g)
         if (blocks) {
           const combinedMessage = blocks.map(block => block.split(':')[1]).join('')
-          receivedData = combinedMessage // 將組合後的訊息存入 receivedData 變數
-          console.log(receivedData)
+          receivedData = "'0x"+combinedMessage+"'"// 將組合後的訊息存入 receivedData 變數
+          const publicKey=web3.eth.accounts.privateKeyToAccount(receivedData);;
+          console.log(publicKey)
           // messageContainer.innerText = receivedData // 顯示在畫面上
         }
       } finally {

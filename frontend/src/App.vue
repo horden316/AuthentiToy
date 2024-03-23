@@ -5,7 +5,7 @@
         <router-link to="/" class="router-link">home</router-link>
       </el-menu-item>
       <el-menu-item>
-        <router-link to="/vertify" class="router-link">verify</router-link>
+        <router-link to="/v" class="router-link">verify</router-link>
       </el-menu-item>
     </el-menu>
   </header>

@@ -26,6 +26,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@element-plus/icons": "^0.0.11",
     "element-plus": "^2.5.1",
     "pinia": "^2.1.7",
     "sweetalert2": "^11.10.2",

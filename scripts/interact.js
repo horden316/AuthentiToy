@@ -1,7 +1,7 @@
 const { Web3 } = require("web3");
 const fs = require("fs");
 const { ETH_DATA_FORMAT, DEFAULT_RETURN_FORMAT } = require("web3");
-let account, contract;
+let account, contract, contractAddress;
 
 const web3 = new Web3("https://optimism-sepolia.infura.io/v3/aea79c382e204cf487e173b3df285ccc");
 // const web3 = new Web3("HTTP://127.0.0.1:7545");
@@ -19,7 +19,7 @@ function initContract() {
   contract = new web3.eth.Contract(abi, contractAddress);
   contract.handleRevert = true;
 }
-
+// console.log(account.address);
 // contract methods
 // async function contractMethod(_type, _to, _toyName) {
 //   contract.methods
@@ -40,25 +40,30 @@ function initContract() {
 
 async function contractMethod(_type, _toAddr, _toyName) {
   // get gas limit
-  await web3.eth
-    .estimateGas(
-      {
-        from: account.address,
-        to: _toAddr,
-        value: web3.utils.toWei("0.0001", "ether"),
-      },
-      "latest",
-      ETH_DATA_FORMAT,
-    )
-    .then((value) => {
-      limit = value;
-    });
+  // await web3.eth
+  //   .estimateGas(
+  //     {
+  //       from: account.address,
+  //       to: _toAddr,
+        
+  //     },
+  //     "latest",
+  //     ETH_DATA_FORMAT
+  //   )
+  //   .then((value) => {
+  //     limit = value;
+  //   });
+  // limit = await contract.methods
+  //   .mint(_type, _toAddr, _toyName)
+  //   .estimateGas();
+  
+
   // tx
   const tx = {
     from: account.address,
-    to: _toAddr,
-    value: web3.utils.toWei("0.0001", "ether"),
-    gas: limit,
+    to: "0xaAB651fCf230eb0c06f30283145DD83876990B2c",
+    data: contract.methods.mint(_type, _toAddr, _toyName).encodeABI(),
+    gas: 200000,
     nonce: await web3.eth.getTransactionCount(account.address),
     maxPriorityFeePerGas: web3.utils.toWei("3", "gwei"),
     maxFeePerGas: web3.utils.toWei("3", "gwei"),

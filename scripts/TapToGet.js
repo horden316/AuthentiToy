@@ -38,7 +38,7 @@ async function startReceivingMessages(messageContainer, serialPort) {
           console.log(fullText);
 
           // 檢查是否符合條件，如果符合則跳出迴圈
-          if (fullText.includes('block3:') && fullText.length >= 15) {
+          if (fullText.includes('block3:')&& fullText.length >= fullText.indexOf('block3:')+22 ) {
             break;
           }
         }

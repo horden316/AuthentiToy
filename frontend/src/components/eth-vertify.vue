@@ -54,11 +54,6 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import toy1 from '@/assets/image/toy1.jpg'
-import toy2 from '@/assets/image/toy2.jpg'
-import toy3 from '@/assets/image/toy3.jpg'
-import toy4 from '@/assets/image/toy4.jpg'
-import toy5 from '@/assets/image/toy5.jpg'
 
 const dialogFormVisible = ref(false)
 const showToyInfo = ref(false)
@@ -84,34 +79,7 @@ import Web3 from 'web3'
 onMounted(async () => {
   const web3 = new Web3('https://eth.llamarpc.com')
 })
-const items = [
-  {
-    id: 1,
-    name: 'Item 1',
-    image: toy1
-  },
-  {
-    id: 2,
-    name: 'Item 2',
-    image: toy2
-  },
-  {
-    id: 3,
-    name: 'Item 3',
-    image: toy3
-  },
-  {
-    id: 4,
-    name: 'Item 4',
-    image: toy4
-  },
-  {
-    id: 5,
-    name: 'Item 5',
-    image: toy5
-  }
-  // Add more items as needed
-]
+
 let serialPort
 
 async function verify() {

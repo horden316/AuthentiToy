@@ -71,14 +71,6 @@ const showToyInfo = ref(false)
 // const onSubmit = () => {
 //   console.log('submit!')
 // }
-
-import Web3 from 'web3'
-
-onMounted(async () => {
-  const web3 = new Web3('https://eth.llamarpc.com')
-  const key = await web3.eth.ens.getPubkey('xyz.eth')
-  console.log(key)
-})
 const items = [
   {
     id: 1,

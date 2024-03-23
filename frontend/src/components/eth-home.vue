@@ -7,7 +7,7 @@
             <span>{{ item.name }}</span>
           </div>
         </template>
-        <img :src="item.image" alt="Image Description" style="width: 280px; height: 280px" />
+        <img :src="item.image" alt="Image Description" style="width: 100%; height: 100%" @click="showToyInfo = true" />
         <template #footer>
           <div class="card-footer">
             <el-button plain @click="dialogFormVisible = true">Buy It</el-button>
@@ -29,11 +29,24 @@
       </div>
     </template>
   </el-dialog>
+  <el-dialog v-model="showToyInfo" title="Toy Information" width="500">
+    <div>
+      <img :src="toy1" alt="toy1" />
+      <p>Toy1</p>
+      <p>price</p>
+      <p>description</p>
+    </div>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="showToyInfo = false">Cancel</el-button>
+        <el-button type="primary" @click="showToyInfo = false"> Confirm </el-button>
+      </div>
+    </template>
+  </el-dialog>
 </template>
 
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
-import { Warning } from '@element-plus/icons'
 import toy1 from '@/assets/image/toy1.jpg'
 import toy2 from '@/assets/image/toy2.jpg'
 import toy3 from '@/assets/image/toy3.jpg'
@@ -41,18 +54,7 @@ import toy4 from '@/assets/image/toy4.jpg'
 import toy5 from '@/assets/image/toy5.jpg'
 
 const dialogFormVisible = ref(false)
-const formLabelWidth = '140px'
-
-const form = reactive({
-  name: '',
-  region: '',
-  date1: '',
-  date2: '',
-  delivery: false,
-  type: [],
-  resource: '',
-  desc: ''
-})
+const showToyInfo = ref(false)
 
 // const form = reactive({
 //   name: '',

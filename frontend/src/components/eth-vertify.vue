@@ -5,11 +5,28 @@
         <h2 class="header-title ">Verify our Toy</h2>
       </template>
       <div class="input-container">
-        <label for="idNumber" >Your toy key:</label>
-        <input type="text" id="idNumber" v-model="idNumber" class="input-field">
+        <label for="inputKey" >Your toy key:</label>
+        <input type="text" id="inputKey" v-model="inputKey" class="input-field">
         <el-button color="#7D7DFF"  @click="verify" class="verify-button  ">Verify</el-button>
       </div>
     </el-card>
+    <el-dialog v-model="dialogErrorVisible" title="Warning" width="500">
+      <p style="color: red;">Fake Toy</p>
+      <div slot="footer">
+        <el-button type="primary" @click="dialogErrorVisible = false">Close</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog v-model="dialogCorrectVisible" title="Toy Name" width="500">
+    <div>
+      <input type="text" id="inputName" v-model="inputName" class="input-field">
+    </div>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="dialogCorrectVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="dialogCorrectVisible = false"> submit </el-button>
+      </div>
+    </template>
+  </el-dialog>
   </div>
 </template>
 
@@ -54,10 +71,12 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import { ElLoading } from 'element-plus'
-const dialogFormVisible = ref(false)
+import { ElDialog  } from 'element-plus'
+const dialogErrorVisible = ref(false)
+const dialogCorrectVisible = ref(false)
 const showToyInfo = ref(false)
-
+const inputKey = ref<string>('');
+const inputName = ref<string>('');
 // const form = reactive({
 //   name: '',
 //   region: '',
@@ -119,7 +138,7 @@ async function startReceivingMessages(serialPort) {
           console.log(fullText)
 
           // 檢查是否符合條件，如果符合則跳出迴圈
-          if (fullText.includes('block3:') && fullText.length >= fullText.indexOf('block3:') + 22) {
+          if (fullText.includes('block3:') && fullText.length >= fullText.indexOf('block3:') + 23) {
             break
           }
         }
@@ -132,7 +151,13 @@ async function startReceivingMessages(serialPort) {
           const privatekey = "0x" + combinedMessage
           const publicKey = web3.eth.accounts.privateKeyToAccount(privatekey)
           console.log(publicKey.address)
-          // messageContainer.innerText = receivedData // 顯示在畫面上
+          if (inputKey.value !== publicKey.address) {
+            dialogErrorVisible.value = true
+          }
+          if (inputKey.value === publicKey.address) {
+            dialogCorrectVisible.value = true
+          }
+          // messageContainer.innerText = receivedData // 顯示在畫面上&& inputKey.value.length==publicKey.length
         }
       } finally {
         reader.releaseLock()

@@ -1,28 +1,24 @@
 const { Web3 } = require("web3");
 const fs = require("fs");
+let account, contract;
 
-
-//TEST DATA
-
-const _type = "John";
-const _to = "0x8A23c3a07D1c1b100E5C2b24044FCE6913347838";
-const _toyName = 'test';
-
-const web3 = new Web3("https://goerli.optimism.io");
+const web3 = new Web3("https://optimism-sepolia.infura.io/v3/1d84243ed4c346b29061392eaaef7917");
 // const web3 = new Web3("HTTP://127.0.0.1:7545");
 
-// smartcontract interact
-const contractAddress = "0xaAB651fCf230eb0c06f30283145DD83876990B2c";
+function initContract(){
+  // smartcontract interact
+  const contractAddress = "0xaAB651fCf230eb0c06f30283145DD83876990B2c";
+  // pkey
+  const privateKeyPath = "./pkey.txt";
+  const privateKey = fs.readFileSync(privateKeyPath, "utf8");
+  account = web3.eth.accounts.privateKeyToAccount(privateKey);
+  // Read the contract address, ABI
+  const abi = require("./ContractAbi.json");
+  // contract object
+  contract = new web3.eth.Contract(abi, contractAddress);
+  contract.handleRevert = true;
+}
 
-// pkey
-const privateKeyPath = "./pkey.txt";
-const privateKey = fs.readFileSync(privateKeyPath, "utf8");
-const account = web3.eth.accounts.privateKeyToAccount(privateKey);
-// Read the contract address, ABI
-const abi = require("./ContractAbi.json");
-// contract object
-const contract = new web3.eth.Contract(abi, contractAddress);
-contract.handleRevert = true;
 
 // contract methods
 async function contractMethod(_type, _to, _toyName) {
@@ -41,4 +37,6 @@ async function contractMethod(_type, _to, _toyName) {
     });
 }
 
-contractMethod(_type, _to, _toyName);
+// initContract();
+// contractMethod(_type, _to, _toyName);
+module.exports = { initContract, contractMethod}; 

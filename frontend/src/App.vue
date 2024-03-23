@@ -7,7 +7,9 @@
 <template>
   <header>
     <el-menu class="el-menu-demo" mode="horizontal">
-      <el-menu-item>stock</el-menu-item>
+      <el-menu-item>
+        <router-link to="/" class="router-link">home</router-link>
+      </el-menu-item>
       <el-menu-item>
         <router-link to="/v" class="router-link">verify</router-link>
       </el-menu-item>

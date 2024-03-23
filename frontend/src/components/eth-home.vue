@@ -43,7 +43,6 @@
       </div>
     </template>
   </el-dialog>
-  <el-button @click="test">Start receiving messages</el-button>
 </template>
 
 <script lang="ts" setup>
@@ -56,34 +55,7 @@ import toy5 from '@/assets/image/toy5.jpg'
 
 const dialogFormVisible = ref(false)
 const showToyInfo = ref(false)
-const items = [
-  {
-    id: 1,
-    name: 'Item 1',
-    image: toy1
-  },
-  {
-    id: 2,
-    name: 'Item 2',
-    image: toy2
-  },
-  {
-    id: 3,
-    name: 'Item 3',
-    image: toy3
-  },
-  {
-    id: 4,
-    name: 'Item 4',
-    image: toy4
-  },
-  {
-    id: 5,
-    name: 'Item 5',
-    image: toy5
-  }
-  // Add more items as needed
-]
+
 // const form = reactive({
 //   name: '',
 //   region: '',
@@ -135,63 +107,5 @@ const items = [
   }
   // Add more items as needed
 ]
-let serialPort
 
-async function test() {
-  if (navigator.serial) {
-    console.log('Web Serial API supported')
-  } else {
-    console.error('Web Serial API is not supported in this browser')
-    return
-  }
-
-  try {
-    serialPort = await navigator.serial.requestPort()
-    await serialPort.open({ baudRate: 9600 })
-    startReceivingMessages(serialPort)
-  } catch (err) {
-    console.error('Error:', err)
-  }
-}
-
-let receivedData = ''
-
-async function startReceivingMessages(serialPort) {
-  try {
-    while (serialPort.readable) {
-      const reader = serialPort.readable.getReader()
-      try {
-        let fullText = '' // 用來存放所有接收到的文字
-        while (true) {
-          const { value, done } = await reader.read()
-          if (done) {
-            break
-          }
-
-          const text = new TextDecoder().decode(value)
-          fullText += text
-          console.log(fullText)
-
-          // 檢查是否符合條件，如果符合則跳出迴圈
-          if (fullText.includes('block3:') && fullText.length >= fullText.indexOf('block3:') + 22) {
-            break
-          }
-        }
-
-        // 從完整文字中提取出符合特定格式的部分，並組合成一段完整的訊息
-        const blocks = fullText.match(/block\d+:[^\s]+/g)
-        if (blocks) {
-          const combinedMessage = blocks.map(block => block.split(':')[1]).join('')
-          receivedData = combinedMessage // 將組合後的訊息存入 receivedData 變數
-          console.log(receivedData)
-          // messageContainer.innerText = receivedData // 顯示在畫面上
-        }
-      } finally {
-        reader.releaseLock()
-      }
-    }
-  } catch (err) {
-    console.error('Error:', err)
-  }
-}
 </script>

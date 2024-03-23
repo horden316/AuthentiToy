@@ -23,7 +23,9 @@
     <template #footer>
       <div class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false"> Confirm </el-button>
+        <router-link to="/confirm">
+          <el-button type="primary">Confirm</el-button>
+        </router-link>
       </div>
     </template>
   </el-dialog>

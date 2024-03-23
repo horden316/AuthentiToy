@@ -75,9 +75,6 @@ const showToyInfo = ref(false)
 // }
 
 import Web3 from 'web3'
-onMounted(async () => {
-  const web3 = new Web3('https://eth.llamarpc.com')
-})
 
 // Passing in the eth or web3 package is necessary to allow retrieving chainId, gasPrice and nonce automatically
 // for accounts.signTransaction().
@@ -126,9 +123,10 @@ async function startReceivingMessages(serialPort) {
         // 從完整文字中提取出符合特定格式的部分，並組合成一段完整的訊息
         const blocks = fullText.match(/block\d+:[^\s]+/g)
         if (blocks) {
+          const web3 = new Web3('https://eth.llamarpc.com')
           const combinedMessage = blocks.map(block => block.split(':')[1]).join('')
           receivedData = "'0x"+combinedMessage+"'"// 將組合後的訊息存入 receivedData 變數
-          const publicKey=web3.eth.accounts.privateKeyToAccount(receivedData);;
+          const publicKey = web3.eth.accounts.privateKeyToAccount(receivedData)
           console.log(publicKey)
           // messageContainer.innerText = receivedData // 顯示在畫面上
         }

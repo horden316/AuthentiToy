@@ -23,9 +23,9 @@
     <template #footer>
       <div class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <router-link to="/confirm">
-          <el-button type="primary">Confirm</el-button>
-        </router-link>
+        <!-- <router-link to="/confirm" > -->
+          <el-button type="primary" @click="confirm">Confirm</el-button>
+        <!-- </router-link> -->
       </div>
     </template>
   </el-dialog>
@@ -55,6 +55,30 @@ import toy5 from '@/assets/image/toy5.jpg'
 
 const dialogFormVisible = ref(false)
 const showToyInfo = ref(false)
+
+
+onMounted(async () => {
+  await confirm()
+  console.log('mounted')
+})
+
+async function confirm(): Promise<void> {
+  console.log('confirm')
+
+  const response = await fetch('/get', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ type: 'toy1', method: 'mint' })
+  })
+  console.log(response)
+  if (response.status !== 200) {
+    console.error('Failed to confirm toy')
+    return
+  }
+  console.log(await response.json())
+}
 
 // const form = reactive({
 //   name: '',

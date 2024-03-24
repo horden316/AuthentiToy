@@ -21,10 +21,10 @@ function initContract() {
 }
 
 async function getTokenID(_address) {
-    contract.methods.balanceOf(_address).call()
-    .then(balance => {
-        console.log(`User's NFT balance: ${balance}`);
-        return balance;
+    contract.methods.getTokenID(_address).call()
+    .then(ID => {
+        console.log(`User's TokenID: ${ID}`);
+        return ID;
     })
     .catch(error => {
         console.error('Error calling balanceOf function:', error);

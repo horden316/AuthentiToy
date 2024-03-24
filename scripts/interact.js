@@ -3,8 +3,8 @@ const fs = require("fs");
 const { ETH_DATA_FORMAT, DEFAULT_RETURN_FORMAT } = require("web3");
 let account, contract, contractAddress;
 
-// const web3 = new Web3("https://optimism-sepolia.infura.io/v3/aea79c382e204cf487e173b3df285ccc");
-const web3 = new Web3("HTTP://127.0.0.1:7545");
+const web3 = new Web3("https://optimism-sepolia.infura.io/v3/aea79c382e204cf487e173b3df285ccc");
+// const web3 = new Web3("HTTP://127.0.0.1:7545");
 
 function initContract() {
   // smartcontract interact

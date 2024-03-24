@@ -1,5 +1,6 @@
 const express = require('express');
 const { spawn } = require('child_process');
+const { type } = require('os');
 const app = express();
 const PORT = 3000;
 
@@ -11,7 +12,7 @@ app.post('/', (req, res) => {
   
   if (type && method === 'mint') {
     const scriptPath = "./genWallet.js"; // 替換為你要執行的另一個 script 的路徑
-    const script = spawn('node', [scriptPath]);
+    const script = spawn("node", [scriptPath, type]);
 
     script.stdout.on('data', (data) => {
       console.log(`stdout: ${data}`);
